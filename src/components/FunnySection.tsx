@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { siteConfig } from '@/config/site.config'
 import { artifactPath } from '@/lib/mediaUtils'
 import { useAudio } from '@/hooks/useAudio'
@@ -11,14 +11,52 @@ import { useReducedMotion } from '@/hooks/useReducedMotion'
 
 function FunnyVideo({ src }: { src: string }) {
   const videoRef = useRef<HTMLVideoElement>(null)
+  const [playing, setPlaying] = useState(false)
   const { pauseForVideo, resumeFromVideo } = useAudio()
+  const label = src.replace('.mp4', '').replace(/_/g, ' ')
+
+  if (!playing) {
+    return (
+      <div
+        className="relative rounded-sm overflow-hidden border border-border bg-surface cursor-pointer group"
+        style={{ height: '208px' }}
+        onClick={() => setPlaying(true)}
+        role="button"
+        aria-label={`Play ${label}`}
+      >
+        <div className="absolute inset-0 bg-gradient-to-br from-surface via-canvas to-surface" />
+        <div className="absolute bottom-3 left-3 text-muted text-xs tracking-widest uppercase font-sans capitalize">
+          {label}
+        </div>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <motion.div
+            className="w-16 h-16 rounded-full border-2 border-gold flex items-center justify-center"
+            whileHover={{ scale: 1.1, borderColor: '#c9a87ccc' }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <div
+              className="ml-1"
+              style={{
+                width: 0,
+                height: 0,
+                borderTop: '10px solid transparent',
+                borderBottom: '10px solid transparent',
+                borderLeft: '18px solid #c9a87c',
+              }}
+            />
+          </motion.div>
+        </div>
+      </div>
+    )
+  }
 
   return (
-    <div className="relative rounded-sm overflow-hidden bg-surface-2 border border-border">
+    <div className="relative rounded-sm overflow-hidden bg-surface border border-border">
       <video
         ref={videoRef}
         src={artifactPath(src)}
         controls
+        autoPlay
         playsInline
         preload="metadata"
         className="w-full h-52 object-cover"
@@ -43,7 +81,7 @@ export function FunnySection() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <p className="text-gold text-xs tracking-[0.4em] uppercase font-sans mb-3">
+          <p className="text-gold text-sm tracking-[0.3em] uppercase font-sans mb-3">
             Now for the real content
           </p>
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-cream">
