@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { siteConfig } from '@/config/site.config'
 import { artifactPath } from '@/lib/mediaUtils'
 import { useAudio } from '@/hooks/useAudio'
@@ -15,6 +15,7 @@ const VIDEO_LABELS = [
 
 function MemeVideo({ src, label }: { src: string; label: string }) {
   const videoRef = useRef<HTMLVideoElement>(null)
+  const [playing, setPlaying] = useState(false)
   const { pauseForVideo, resumeFromVideo } = useAudio()
   const reduced = useReducedMotion()
 
@@ -23,21 +24,53 @@ function MemeVideo({ src, label }: { src: string; label: string }) {
       className="flex flex-col gap-3"
       variants={reduced ? fadeUpReducedVariants : fadeUpVariants}
     >
-      <p className="text-gold text-xs tracking-[0.3em] uppercase font-sans text-center">{label}</p>
-      <div className="relative rounded-sm overflow-hidden border border-border bg-surface">
-        <video
-          ref={videoRef}
-          src={artifactPath(src)}
-          controls
-          playsInline
-          preload="metadata"
-          className="w-full rounded-sm"
-          style={{ maxHeight: '420px' }}
-          onPlay={() => pauseForVideo()}
-          onPause={() => resumeFromVideo()}
-          onEnded={() => resumeFromVideo()}
-        />
-      </div>
+      <p className="text-gold text-sm tracking-[0.3em] uppercase font-sans text-center">{label}</p>
+
+      {!playing ? (
+        <div
+          className="relative rounded-sm overflow-hidden border border-border bg-surface cursor-pointer group"
+          style={{ maxHeight: '420px', minHeight: '240px' }}
+          onClick={() => setPlaying(true)}
+          role="button"
+          aria-label={`Play ${label}`}
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-surface via-canvas to-surface" />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <motion.div
+              className="w-20 h-20 rounded-full border-2 border-gold flex items-center justify-center"
+              whileHover={{ scale: 1.1, borderColor: '#c9a87ccc' }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <div
+                className="ml-1"
+                style={{
+                  width: 0,
+                  height: 0,
+                  borderTop: '12px solid transparent',
+                  borderBottom: '12px solid transparent',
+                  borderLeft: '22px solid #c9a87c',
+                }}
+              />
+            </motion.div>
+          </div>
+        </div>
+      ) : (
+        <div className="relative rounded-sm overflow-hidden border border-border bg-surface">
+          <video
+            ref={videoRef}
+            src={artifactPath(src)}
+            controls
+            autoPlay
+            playsInline
+            preload="metadata"
+            className="w-full rounded-sm"
+            style={{ maxHeight: '420px' }}
+            onPlay={() => pauseForVideo()}
+            onPause={() => resumeFromVideo()}
+            onEnded={() => resumeFromVideo()}
+          />
+        </div>
+      )}
     </motion.div>
   )
 }
