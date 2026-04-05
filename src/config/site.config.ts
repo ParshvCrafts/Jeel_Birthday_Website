@@ -59,18 +59,19 @@ export const siteConfig = {
     soloGallery2: [
       { src: 'solo_7.jpeg', size: 'normal' as const },
       { src: 'solo_9.jpeg', size: 'normal' as const },
+      { src: 'main.jpeg', size: 'normal' as const },
       { src: 'solo_8.jpeg', size: 'wide' as const },
       { src: 'solo_12.jpeg', size: 'normal' as const },
-      { src: 'solo_10.jpeg', size: 'wide' as const },
       { src: 'solo_11.jpeg', size: 'normal' as const },
+      { src: 'solo_10.jpeg', size: 'wide' as const },
     ],
     soloGallery3: [
       { src: 'solo_13.jpeg', size: 'normal' as const },
       { src: 'solo_14.jpeg', size: 'tall' as const },
       { src: 'solo_15.jpeg', size: 'normal' as const },
       { src: 'solo_16.jpeg', size: 'normal' as const },
-      { src: 'solo_17.jpeg', size: 'wide' as const },
       { src: 'solo_18.jpeg', size: 'tall' as const },
+      { src: 'solo_17.jpeg', size: 'wide' as const },
     ],
     familyFilmstrip1: [
       'family_1.jpeg', 'family_2.jpeg', 'family_3.jpeg', 'family_4.jpeg', 'family_5.jpeg',

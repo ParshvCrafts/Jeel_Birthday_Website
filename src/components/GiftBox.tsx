@@ -49,7 +49,7 @@ export function GiftBox() {
 
       {/* Gift box — click to open */}
       <motion.div
-        className="gift-scene cursor-pointer"
+        className="gift-scene cursor-pointer pt-12 md:pt-16"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
