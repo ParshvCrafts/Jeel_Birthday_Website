@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { motion, useMotionValue, animate } from 'framer-motion'
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { artifactPath } from '@/lib/mediaUtils'
 import { fadeUpVariants, fadeUpReducedVariants } from '@/lib/animations'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
@@ -19,22 +19,52 @@ export function FamilyFilmstrip({ photos, title }: FamilyFilmstripProps) {
   const reduced = useReducedMotion()
   const constraintsRef = useRef<HTMLDivElement>(null)
   const x = useMotionValue(0)
+  const isDraggingRef = useRef(false)
+  const isHoveringRef = useRef(false)
+  const activeDotRef = useRef(0)
 
   const CARD_WIDTH = 280
   const GAP = 16
 
+  const scrollToIndex = (index: number) => {
+    const cardStep = CARD_WIDTH + GAP
+    const target = -(index * cardStep)
+    activeDotRef.current = index
+    setActiveDot(index)
+    animate(x, target, { type: 'spring', stiffness: 300, damping: 35 })
+  }
+
   const handleDragEnd = () => {
+    isDraggingRef.current = false
     const currentX = x.get()
     const cardStep = CARD_WIDTH + GAP
     const index = Math.max(0, Math.min(photos.length - 1, Math.round(-currentX / cardStep)))
+    activeDotRef.current = index
     setActiveDot(index)
   }
 
+  // Auto-scroll every 3.5s — pauses while user hovers or drags
+  useEffect(() => {
+    if (reduced) return
+    const interval = setInterval(() => {
+      if (isDraggingRef.current || isHoveringRef.current) return
+      const next = (activeDotRef.current + 1) % photos.length
+      activeDotRef.current = next
+      setActiveDot(next)
+      animate(x, -(next * (CARD_WIDTH + GAP)), { type: 'spring', stiffness: 200, damping: 40 })
+    }, 3500)
+    return () => clearInterval(interval)
+  }, [photos.length, x, reduced])
+
   return (
-    <section className="py-16 md:py-24 overflow-hidden">
+    <section
+      className="py-16 md:py-24 overflow-hidden"
+      onMouseEnter={() => { isHoveringRef.current = true }}
+      onMouseLeave={() => { isHoveringRef.current = false }}
+    >
       {title && (
         <motion.p
-          className="text-center text-gold text-xs tracking-[0.4em] uppercase font-sans mb-10 px-4"
+          className="text-center text-gold text-sm tracking-[0.35em] uppercase font-sans mb-10 px-4"
           variants={reduced ? fadeUpReducedVariants : fadeUpVariants}
           initial="hidden"
           whileInView="visible"
@@ -52,13 +82,14 @@ export function FamilyFilmstrip({ photos, title }: FamilyFilmstripProps) {
           dragElastic={0.08}
           dragTransition={{ bounceStiffness: 300, bounceDamping: 35 }}
           style={{ x }}
+          onDragStart={() => { isDraggingRef.current = true }}
           onDragEnd={handleDragEnd}
         >
           {photos.map((photo, i) => (
             <motion.button
               key={photo}
               className="relative flex-shrink-0 rounded-sm overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-gold group"
-              style={{ width: CARD_WIDTH, height: 380 }}
+              style={{ width: CARD_WIDTH, height: 420, boxShadow: '0 4px 20px rgba(0,0,0,0.4)' }}
               onClick={() => setLightboxIndex(i)}
               aria-label={`Family photo ${i + 1}`}
               onMouseDown={(e) => e.stopPropagation()}
@@ -74,8 +105,6 @@ export function FamilyFilmstrip({ photos, title }: FamilyFilmstripProps) {
               <div className="absolute inset-0 border border-gold/0 group-hover:border-gold/30 transition-all duration-300 pointer-events-none" />
             </motion.button>
           ))}
-          {/* Peek spacer */}
-          <div style={{ minWidth: 60, flexShrink: 0 }} />
         </motion.div>
       </div>
 
@@ -84,13 +113,7 @@ export function FamilyFilmstrip({ photos, title }: FamilyFilmstripProps) {
         {photos.map((_, i) => (
           <button
             key={i}
-            onClick={() => {
-              const CARD_WIDTH = 280
-              const GAP = 16
-              const target = -(i * (CARD_WIDTH + GAP))
-              setActiveDot(i)
-              animate(x, target, { type: 'spring', stiffness: 300, damping: 35 })
-            }}
+            onClick={() => scrollToIndex(i)}
             aria-label={`Go to photo ${i + 1}`}
             className={`transition-all duration-300 rounded-full ${
               i === activeDot ? 'w-5 h-2 bg-gold' : 'w-2 h-2 bg-border hover:bg-gold/40'
