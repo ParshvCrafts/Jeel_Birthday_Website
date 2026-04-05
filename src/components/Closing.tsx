@@ -8,9 +8,34 @@ import { useReducedMotion } from '@/hooks/useReducedMotion'
 const CONFETTI_COLORS = ['#c9a87c', '#f5f0e8', '#8a6a3a', '#e8d5b0', '#2a2018']
 const CONFETTI_COUNT = 24
 
+/**
+ * Parses a closing message string into visual paragraphs and an optional signature.
+ * Sentences (ending in . ! ?) are grouped into pairs for readability.
+ * Any trailing text without sentence-ending punctuation is treated as a signature.
+ */
+function parseClosingMessage(text: string): { paragraphs: string[]; signature: string | null } {
+  const trimmed = text.trim()
+  if (!trimmed) return { paragraphs: [], signature: null }
+
+  // Extract sentences that end with . ! or ?
+  const sentences = trimmed.match(/[^.!?]+[.!?]+/g) ?? []
+  const matched = sentences.join(' ')
+  const remainder = trimmed.slice(matched.length).trim()
+  const signature = remainder || null
+
+  // Group sentences into visual paragraphs of 2
+  const paragraphs: string[] = []
+  for (let i = 0; i < sentences.length; i += 2) {
+    paragraphs.push(sentences.slice(i, i + 2).join(' '))
+  }
+
+  return { paragraphs, signature }
+}
+
 export function Closing() {
   const reduced = useReducedMotion()
   const hasClosingMessage = siteConfig.text.closing.trim().length > 0
+  const { paragraphs, signature } = parseClosingMessage(siteConfig.text.closing)
 
   return (
     <section className="relative py-28 md:py-40 px-6 overflow-hidden bg-surface/30">
@@ -55,12 +80,27 @@ export function Closing() {
         </motion.h2>
 
         {hasClosingMessage && (
-          <motion.p
-            className="text-muted font-sans text-base md:text-xl leading-relaxed mb-10 max-w-xl mx-auto"
-            variants={reduced ? fadeUpReducedVariants : fadeUpVariants}
-          >
-            {siteConfig.text.closing}
-          </motion.p>
+          <>
+            <div className="mb-10 max-w-xl mx-auto text-left space-y-4">
+              {paragraphs.map((para, i) => (
+                <motion.p
+                  key={i}
+                  className="text-cream/75 font-sans text-base md:text-lg leading-8"
+                  variants={reduced ? fadeUpReducedVariants : fadeUpVariants}
+                >
+                  {para}
+                </motion.p>
+              ))}
+            </div>
+            {signature && (
+              <motion.p
+                className="font-serif italic text-gold text-lg md:text-xl mb-10 max-w-xl mx-auto text-right"
+                variants={reduced ? fadeUpReducedVariants : fadeUpVariants}
+              >
+                — {signature}
+              </motion.p>
+            )}
+          </>
         )}
 
         <motion.p

@@ -19,7 +19,7 @@ export const siteConfig = {
       'May god bless you and life gives you all the happiness. May this birthday be your best birthday ever',
     quoteBreak:
       'Eat healthy not my brain, sleep nicely, fart less, and live life like muchu, muchu',
-    closing: '', // ← FILL THIS IN: your personal closing message to Jeel
+    closing: 'I will always love you chiku no matter whether it is day or night, yeesterday, today, or tomorrow, and everyday. My job is to always distrub you so do not get annoyed. Also, please don\'t do something wrong to me just because you want my share of the property. Whether you choose Actual Science (certificate course) as your career, whether you make us walk 5 km to eat some bad food dish (to be noted in the list), or whether you chose a Muslim husband, I will always be standing behind you to support you. Your best loving brother, Parshv', // ← FILL THIS IN: your personal closing message to Jeel
     memeVideoLabels: {
       bholaBaba: 'Bhola Baba',
       liveLife: 'Live Life',
