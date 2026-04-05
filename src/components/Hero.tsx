@@ -2,7 +2,7 @@
 
 import { useRef } from 'react'
 import Image from 'next/image'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { siteConfig } from '@/config/site.config'
 import { artifactPath } from '@/lib/mediaUtils'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
@@ -20,11 +20,6 @@ const words = siteConfig.text.heroGreeting.split(' ')
 export function Hero() {
   const reduced = useReducedMotion()
   const heroRef = useRef<HTMLElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ['start start', 'end start'],
-  })
-  const photoY = useTransform(scrollYProgress, [0, 1], ['0%', '20%'])
 
   return (
     <section
@@ -114,7 +109,6 @@ export function Hero() {
         initial="hidden"
         animate="visible"
         transition={{ delay: 0.3 }}
-        style={reduced ? {} : { y: photoY }}
       >
         {/* Gradient blending left edge into canvas on large screens */}
         <div

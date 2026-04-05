@@ -16,6 +16,25 @@ export function isBirthday(date: Date, day: number, month: number): boolean {
 }
 
 /**
+ * Returns true if `date` is after the birthday this calendar year (not on it).
+ */
+export function isPastBirthday(date: Date, day: number, month: number): boolean {
+  if (isBirthday(date, day, month)) return false
+  const thisYearBirthday = new Date(date.getFullYear(), month - 1, day, 0, 0, 0, 0)
+  return date > thisYearBirthday
+}
+
+/**
+ * Returns the number of whole days elapsed since the most recent birthday occurrence.
+ * Returns 0 on the birthday itself.
+ */
+export function getDaysSinceBirthday(date: Date, day: number, month: number): number {
+  const thisYearBirthday = new Date(date.getFullYear(), month - 1, day, 0, 0, 0, 0)
+  const diff = date.getTime() - thisYearBirthday.getTime()
+  return Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24)))
+}
+
+/**
  * Returns the next occurrence of the birthday after `from`.
  * If `from` is on or after the birthday this year, returns next year.
  */

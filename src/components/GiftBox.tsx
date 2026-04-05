@@ -16,8 +16,8 @@ export function GiftBox() {
 
   const handleOpen = () => {
     setIsOpen(true)
-    playGiftSound()
     setTimeout(() => setRevealed(true), 600)
+    setTimeout(() => playGiftSound(), 2600)
   }
 
   const handleClose = () => {
@@ -36,6 +36,16 @@ export function GiftBox() {
       >
         A special gift
       </motion.p>
+
+      <motion.h2
+        className="font-serif text-3xl md:text-4xl font-bold text-cream text-center"
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.15 }}
+      >
+        Here is a Gift for you. Open it
+      </motion.h2>
 
       {/* Gift box — click to open */}
       <motion.div

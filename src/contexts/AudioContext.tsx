@@ -68,25 +68,32 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
   }, [initHowler])
 
   const duck = useCallback(() => {
-    bgRef.current?.fade(
-      bgRef.current.volume(),
-      siteConfig.music.duckedVolume,
-      400
-    )
+    if (bgRef.current?.playing()) {
+      bgRef.current.fade(
+        bgRef.current.volume(),
+        siteConfig.music.duckedVolume,
+        400
+      )
+    }
   }, [])
 
   const unduck = useCallback(() => {
-    bgRef.current?.fade(
-      bgRef.current.volume(),
-      siteConfig.music.defaultVolume,
-      600
-    )
+    if (bgRef.current?.playing()) {
+      bgRef.current.fade(
+        bgRef.current.volume(),
+        siteConfig.music.defaultVolume,
+        600
+      )
+    }
   }, [])
 
   const playGiftSound = useCallback(() => {
-    duck()
+    const wasPlaying = bgRef.current?.playing() ?? false
+    if (wasPlaying) duck()
     giftRef.current?.play()
-    giftRef.current?.once('end', unduck)
+    giftRef.current?.once('end', () => {
+      if (wasPlaying) unduck()
+    })
   }, [duck, unduck])
 
   const pauseForVideo = useCallback(() => {
@@ -97,9 +104,11 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   const resumeFromVideo = useCallback(() => {
-    if (wasPausedForVideo.current) {
+    if (wasPausedForVideo.current && bgRef.current && !bgRef.current.playing()) {
       wasPausedForVideo.current = false
-      bgRef.current?.play()
+      bgRef.current.play()
+    } else if (wasPausedForVideo.current) {
+      wasPausedForVideo.current = false
     }
   }, [])
 

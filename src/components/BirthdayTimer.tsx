@@ -27,7 +27,7 @@ function DigitBlock({ value, label }: { value: number; label: string }) {
 }
 
 export function BirthdayTimer() {
-  const { isBirthday, countdown } = useBirthday()
+  const { isBirthday, isPast, daysSince, countdown } = useBirthday()
   const reduced = useReducedMotion()
 
   const reducedVariant = { hidden: { opacity: 0 }, visible: { opacity: 1 } }
@@ -55,6 +55,27 @@ export function BirthdayTimer() {
             >
               {siteConfig.birthday.hinglishMessage}
             </motion.h2>
+            <motion.p
+              className="text-muted text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-sans"
+              variants={reduced ? reducedVariant : fadeUpVariants}
+            >
+              {siteConfig.birthday.countingMessage}
+            </motion.p>
+          </>
+        ) : isPast ? (
+          <>
+            <motion.div
+              className="text-gold text-sm tracking-[0.3em] uppercase font-sans mb-6"
+              variants={reduced ? reducedVariant : fadeUpVariants}
+            >
+              🎂 Birthday was on April 5
+            </motion.div>
+            <motion.div
+              className="flex flex-col items-center gap-4 mb-8"
+              variants={reduced ? reducedVariant : fadeUpVariants}
+            >
+              <DigitBlock value={daysSince} label="Days Since Birthday" />
+            </motion.div>
             <motion.p
               className="text-muted text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-sans"
               variants={reduced ? reducedVariant : fadeUpVariants}
