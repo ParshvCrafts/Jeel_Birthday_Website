@@ -88,13 +88,8 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   const playGiftSound = useCallback(() => {
-    const wasPlaying = bgRef.current?.playing() ?? false
-    if (wasPlaying) duck()
     giftRef.current?.play()
-    giftRef.current?.once('end', () => {
-      if (wasPlaying) unduck()
-    })
-  }, [duck, unduck])
+  }, [])
 
   const pauseForVideo = useCallback(() => {
     if (bgRef.current?.playing()) {

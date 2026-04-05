@@ -11,10 +11,11 @@ import { useReducedMotion } from '@/hooks/useReducedMotion'
 export function GiftBox() {
   const [isOpen, setIsOpen] = useState(false)
   const [revealed, setRevealed] = useState(false)
-  const { playGiftSound } = useAudio()
+  const { playGiftSound, pauseForVideo, resumeFromVideo } = useAudio()
   const reduced = useReducedMotion()
 
   const handleOpen = () => {
+    pauseForVideo()
     setIsOpen(true)
     setTimeout(() => setRevealed(true), 600)
     setTimeout(() => playGiftSound(), 2600)
@@ -22,6 +23,7 @@ export function GiftBox() {
 
   const handleClose = () => {
     setIsOpen(false)
+    resumeFromVideo()
     setTimeout(() => setRevealed(false), 400)
   }
 
