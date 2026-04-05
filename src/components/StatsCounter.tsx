@@ -1,8 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { animate, motion } from 'framer-motion'
-import { useInView } from 'framer-motion'
+import { animate, motion, useInView } from 'framer-motion'
 import { siteConfig } from '@/config/site.config'
 import { staggerContainerVariants, fadeUpVariants, fadeUpReducedVariants } from '@/lib/animations'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
