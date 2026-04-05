@@ -12,11 +12,15 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
 
   useEffect(() => {
     // Path draw takes ~1.4s, then fade ~0.6s
+    let inner: ReturnType<typeof setTimeout>
     const timer = setTimeout(() => {
       setVisible(false)
-      setTimeout(onComplete, 600)
+      inner = setTimeout(onComplete, 600)
     }, 1400)
-    return () => clearTimeout(timer)
+    return () => {
+      clearTimeout(timer)
+      clearTimeout(inner)
+    }
   }, [onComplete])
 
   return (

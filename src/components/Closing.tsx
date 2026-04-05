@@ -67,10 +67,11 @@ export function Closing() {
           className="text-subtle text-sm font-sans tracking-widest uppercase"
           variants={reduced ? fadeUpReducedVariants : fadeUpVariants}
         >
-          April 5, {new Date().getFullYear()} ♥
+          April 5, {siteConfig.birthday.birthYear + siteConfig.birthday.age} ♥
         </motion.p>
 
         <motion.button
+          type="button"
           className="mt-12 text-subtle hover:text-gold text-xs tracking-widest uppercase font-sans transition-colors flex items-center gap-2 mx-auto"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           variants={reduced ? fadeUpReducedVariants : fadeUpVariants}

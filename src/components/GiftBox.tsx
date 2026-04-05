@@ -48,7 +48,7 @@ export function GiftBox() {
         role="button"
         aria-label="Open gift"
         tabIndex={0}
-        onKeyDown={(e) => e.key === 'Enter' && handleOpen()}
+        onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handleOpen()}
       >
         <div className="relative w-32 h-28 md:w-48 md:h-40">
           {/* Lid */}

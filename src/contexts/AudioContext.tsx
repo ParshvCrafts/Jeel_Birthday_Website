@@ -1,6 +1,7 @@
 'use client'
 
 import React, { createContext, useContext, useRef, useState, useEffect, useCallback } from 'react'
+import type { Howl } from 'howler'
 import { siteConfig } from '@/config/site.config'
 
 interface AudioContextValue {
@@ -16,8 +17,8 @@ interface AudioContextValue {
 const AudioCtx = createContext<AudioContextValue | null>(null)
 
 export function AudioProvider({ children }: { children: React.ReactNode }) {
-  const bgRef = useRef<any>(null)
-  const giftRef = useRef<any>(null)
+  const bgRef = useRef<Howl | null>(null)
+  const giftRef = useRef<Howl | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [initialized, setInitialized] = useState(false)
   const wasPausedForVideo = useRef(false)

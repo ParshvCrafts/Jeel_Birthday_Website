@@ -3,7 +3,7 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { artifactPath } from '@/lib/mediaUtils'
 
 interface LightboxProps {
@@ -15,6 +15,10 @@ interface LightboxProps {
 
 export function Lightbox({ photos, initialIndex, open, onClose }: LightboxProps) {
   const [index, setIndex] = useState(initialIndex)
+
+  useEffect(() => {
+    if (open) setIndex(initialIndex)
+  }, [open, initialIndex])
 
   const prev = useCallback(() => setIndex((i) => (i - 1 + photos.length) % photos.length), [photos.length])
   const next = useCallback(() => setIndex((i) => (i + 1) % photos.length), [photos.length])

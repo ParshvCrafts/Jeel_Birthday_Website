@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { motion, useMotionValue } from 'framer-motion'
+import { motion, useMotionValue, animate } from 'framer-motion'
 import { useRef, useState } from 'react'
 import { artifactPath } from '@/lib/mediaUtils'
 import { fadeUpVariants, fadeUpReducedVariants } from '@/lib/animations'
@@ -84,7 +84,13 @@ export function FamilyFilmstrip({ photos, title }: FamilyFilmstripProps) {
         {photos.map((_, i) => (
           <button
             key={i}
-            onClick={() => setActiveDot(i)}
+            onClick={() => {
+              const CARD_WIDTH = 280
+              const GAP = 16
+              const target = -(i * (CARD_WIDTH + GAP))
+              setActiveDot(i)
+              animate(x, target, { type: 'spring', stiffness: 300, damping: 35 })
+            }}
             aria-label={`Go to photo ${i + 1}`}
             className={`transition-all duration-300 rounded-full ${
               i === activeDot ? 'w-5 h-2 bg-gold' : 'w-2 h-2 bg-border hover:bg-gold/40'
