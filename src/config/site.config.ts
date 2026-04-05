@@ -83,7 +83,29 @@ export const siteConfig = {
     funnyVideos: ['funny_2.mp4', 'funny_5.mp4', 'funny_6.mp4', 'funny_7.mp4'],
     memeVideos: ['bhola_baba.mp4', 'live_life.mp4'],
   },
+
+  timeline: [
+    { year: '2002', title: 'The Beginning', description: 'A legend was born on April 5th.' },
+    { year: '2008', title: 'School Days', description: 'Started the journey of pretending to study.' },
+    { year: '2014', title: 'Teenage Era', description: 'Peak drama, maximum personality unlocked.' },
+    { year: '2019', title: 'College Begins', description: 'New city, new Chiku, same chaos.' },
+    { year: '2023', title: 'Adulting Begins', description: 'Still figuring it out, but make it fashion.' },
+    { year: '2026', title: 'Turning 24', description: 'Best birthday yet — your brother made a website.' },
+  ],
+
+  loveCards: [
+    'You make home feel like home',
+    'Your laugh is actually contagious',
+    'You care more than you show',
+    "You're annoyingly good at everything",
+    'You always have my back',
+    'You turn boring days into memories',
+    'Your heart is genuinely huge',
+    'You make the whole family better',
+    "I'm lucky you're my sister",
+  ],
 } as const
 
 export type PhotoSize = 'normal' | 'tall' | 'wide'
 export type PhotoEntry = { src: string; size: PhotoSize }
+export type TimelineItem = { year: string; title: string; description: string }
