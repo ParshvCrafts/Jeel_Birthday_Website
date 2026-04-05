@@ -3,7 +3,7 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import { artifactPath } from '@/lib/mediaUtils'
 
 interface LightboxProps {
@@ -22,6 +22,8 @@ export function Lightbox({ photos, initialIndex, open, onClose }: LightboxProps)
 
   const prev = useCallback(() => setIndex((i) => (i - 1 + photos.length) % photos.length), [photos.length])
   const next = useCallback(() => setIndex((i) => (i + 1) % photos.length), [photos.length])
+
+  const startXRef = useRef<number | null>(null)
 
   const handleOpenChange = (o: boolean) => {
     if (o) setIndex(initialIndex)
@@ -44,6 +46,14 @@ export function Lightbox({ photos, initialIndex, open, onClose }: LightboxProps)
           onKeyDown={(e) => {
             if (e.key === 'ArrowLeft') prev()
             if (e.key === 'ArrowRight') next()
+          }}
+          onPointerDown={(e) => { startXRef.current = e.clientX }}
+          onPointerUp={(e) => {
+            if (startXRef.current === null) return
+            const delta = e.clientX - startXRef.current
+            startXRef.current = null
+            if (delta > 50) prev()
+            else if (delta < -50) next()
           }}
         >
           <AnimatePresence mode="wait">
@@ -84,9 +94,11 @@ export function Lightbox({ photos, initialIndex, open, onClose }: LightboxProps)
             </>
           )}
 
-          <span className="absolute bottom-6 left-1/2 -translate-x-1/2 text-subtle text-xs tracking-widest font-sans">
-            {index + 1} / {photos.length}
-          </span>
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1">
+            <span className="text-subtle text-sm font-sans tracking-widest">
+              {index + 1} / {photos.length}
+            </span>
+          </div>
 
           <Dialog.Close asChild>
             <button
