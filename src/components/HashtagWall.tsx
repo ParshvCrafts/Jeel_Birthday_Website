@@ -14,7 +14,7 @@ export function HashtagWall() {
   return (
     <section className="py-20 md:py-28 px-6 overflow-hidden">
       <motion.p
-        className="text-center text-gold text-xs tracking-[0.4em] uppercase font-sans mb-12"
+        className="text-center text-gold text-sm tracking-[0.3em] uppercase font-sans mb-12"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}

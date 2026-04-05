@@ -28,7 +28,7 @@ export function GiftBox() {
   return (
     <section className="py-24 px-6 flex flex-col items-center gap-6 bg-surface/20">
       <motion.p
-        className="text-gold text-xs tracking-[0.4em] uppercase font-sans"
+        className="text-gold text-sm tracking-[0.3em] uppercase font-sans"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
@@ -77,7 +77,7 @@ export function GiftBox() {
         </div>
 
         <motion.p
-          className="text-center text-muted text-xs tracking-widest uppercase font-sans mt-4"
+          className="text-center text-muted text-sm tracking-widest uppercase font-sans mt-4"
           animate={{ opacity: isOpen ? 0 : 1 }}
         >
           Click to open ↑
@@ -118,7 +118,7 @@ export function GiftBox() {
 
             <Dialog.Close asChild>
               <button
-                className="mt-8 text-muted hover:text-gold text-xs tracking-widest uppercase font-sans transition-colors"
+                className="mt-8 text-muted hover:text-gold text-sm tracking-widest uppercase font-sans transition-colors"
                 aria-label="Close gift"
               >
                 Close

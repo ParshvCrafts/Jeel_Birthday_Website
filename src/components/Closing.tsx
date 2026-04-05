@@ -66,7 +66,7 @@ export function Closing() {
         viewport={{ once: true, margin: '-60px' }}
       >
         <motion.p
-          className="text-gold text-xs tracking-[0.4em] uppercase font-sans mb-6"
+          className="text-gold text-sm tracking-[0.3em] uppercase font-sans mb-6"
           variants={reduced ? fadeUpReducedVariants : fadeUpVariants}
         >
           With love
@@ -112,7 +112,7 @@ export function Closing() {
 
         <motion.button
           type="button"
-          className="mt-12 text-subtle hover:text-gold text-xs tracking-widest uppercase font-sans transition-colors flex items-center gap-2 mx-auto"
+          className="mt-12 text-subtle hover:text-gold text-sm tracking-widest uppercase font-sans transition-colors flex items-center gap-2 mx-auto"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           variants={reduced ? fadeUpReducedVariants : fadeUpVariants}
         >

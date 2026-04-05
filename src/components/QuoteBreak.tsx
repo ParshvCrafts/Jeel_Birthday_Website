@@ -12,7 +12,7 @@ export function QuoteBreak() {
     <section className="py-20 md:py-32 px-6 md:px-12 bg-surface/30">
       <div className="max-w-5xl mx-auto">
         <motion.p
-          className="text-gold/50 text-xs tracking-[0.4em] uppercase font-sans mb-8"
+          className="text-gold/50 text-sm tracking-[0.3em] uppercase font-sans mb-8"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}

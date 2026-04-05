@@ -21,7 +21,7 @@ function DigitBlock({ value, label }: { value: number; label: string }) {
           {display}
         </motion.span>
       </div>
-      <span className="text-subtle text-xs tracking-[0.2em] uppercase font-sans">{label}</span>
+      <span className="text-subtle text-sm tracking-[0.15em] uppercase font-sans">{label}</span>
     </div>
   )
 }
@@ -44,7 +44,7 @@ export function BirthdayTimer() {
         {isBirthday ? (
           <>
             <motion.div
-              className="text-gold text-xs tracking-[0.4em] uppercase font-sans mb-6"
+              className="text-gold text-sm tracking-[0.3em] uppercase font-sans mb-6"
               variants={reduced ? reducedVariant : fadeUpVariants}
             >
               🎂 Today is the day
@@ -65,13 +65,13 @@ export function BirthdayTimer() {
         ) : (
           <>
             <motion.p
-              className="text-gold text-xs tracking-[0.4em] uppercase font-sans mb-4"
+              className="text-gold text-sm tracking-[0.3em] uppercase font-sans mb-4"
               variants={reduced ? reducedVariant : fadeUpVariants}
             >
               Next birthday in
             </motion.p>
             <motion.p
-              className="text-muted font-sans text-sm mb-10 max-w-xl mx-auto leading-relaxed"
+              className="text-muted font-sans text-base mb-10 max-w-xl mx-auto leading-relaxed"
               variants={reduced ? reducedVariant : fadeUpVariants}
             >
               {siteConfig.birthday.countingMessage}
