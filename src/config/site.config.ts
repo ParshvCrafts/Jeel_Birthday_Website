@@ -1,0 +1,89 @@
+export const siteConfig = {
+  birthday: {
+    name: 'Jeel',
+    nickname: 'Chiku',
+    day: 5,
+    month: 4, // April (1-indexed for display, but Date uses 0-indexed — see dateUtils)
+    birthYear: 2002,
+    age: 24,
+    hinglishMessage:
+      "Ohh my god! It is your birthday Jeel. You have turned 24 years dodhi this year",
+    countingMessage:
+      "I am counting so that you don't have get jealous seeing other's birthday or cry when your birthday will come again",
+  },
+
+  text: {
+    heroGreeting: 'Happy Birthday,',
+    heroName: 'Chiku',
+    blessing:
+      'May god bless you and life gives you all the happiness. May this birthday be your best birthday ever',
+    quoteBreak:
+      'Eat healthy not my brain, sleep nicely, fart less, and live life like muchu, muchu',
+    closing: '', // ← FILL THIS IN: your personal closing message to Jeel
+    memeVideoLabels: {
+      bholaBaba: 'Bhola Baba',
+      liveLife: 'Live Life',
+    },
+  },
+
+  music: {
+    defaultVolume: 0.25,     // background music volume (0–1)
+    duckedVolume: 0.05,      // background volume while gift sound plays
+    giftSoundVolume: 0.8,    // curse.mp3 volume
+    autoplayOnFirstInteraction: true,
+  },
+
+  hashtags: [
+    '#Chiku',
+    '#Noob',
+    '#Shruti',
+    '#Hopari',
+    '#AithiGoid',
+    '#Choita',
+    '#Padodi',
+    '#Hagrid',
+    '#MarkHenry',
+  ],
+
+  media: {
+    // Change order here to reorder photos — components read from this config
+    soloGallery1: [
+      { src: 'solo_1.jpeg', size: 'tall' as const },
+      { src: 'solo_2.jpeg', size: 'normal' as const },
+      { src: 'solo_3.jpeg', size: 'normal' as const },
+      { src: 'solo_4.jpeg', size: 'wide' as const },
+      { src: 'solo_5.jpeg', size: 'normal' as const },
+      { src: 'solo_6.jpeg', size: 'tall' as const },
+    ],
+    soloGallery2: [
+      { src: 'solo_7.jpeg', size: 'normal' as const },
+      { src: 'solo_8.jpeg', size: 'tall' as const },
+      { src: 'solo_9.jpeg', size: 'normal' as const },
+      { src: 'solo_10.jpeg', size: 'wide' as const },
+      { src: 'solo_11.jpeg', size: 'normal' as const },
+      { src: 'solo_12.jpeg', size: 'normal' as const },
+    ],
+    soloGallery3: [
+      { src: 'solo_13.jpeg', size: 'normal' as const },
+      { src: 'solo_14.jpeg', size: 'tall' as const },
+      { src: 'solo_15.jpeg', size: 'normal' as const },
+      { src: 'solo_16.jpeg', size: 'normal' as const },
+      { src: 'solo_17.jpeg', size: 'wide' as const },
+    ],
+    familyFilmstrip1: [
+      'family_1.jpeg', 'family_2.jpeg', 'family_3.jpeg', 'family_4.jpeg', 'family_5.jpeg',
+      'family_6.jpeg', 'family_7.jpeg', 'family_8.jpeg', 'family_9.jpeg', 'family_10.jpeg',
+    ],
+    familyFilmstrip2: [
+      'family_11.jpeg', 'family_12.jpeg', 'family_13.jpeg', 'family_14.jpeg', 'family_15.jpeg',
+      'family_16.jpeg', 'family_17.jpeg', 'family_18.jpeg', 'family_19.jpeg', 'family_20.jpeg',
+    ],
+    // Note: funny_2.jpeg and funny_2.mp4 share base name — extensions are explicit
+    funnyPhotos: ['funny_1.jpeg', 'funny_2.jpeg', 'funny_3.jpeg', 'funny_4.jpeg'],
+    funnyVideos: ['funny_2.mp4', 'funny_5.mp4', 'funny_6.mp4', 'funny_7.mp4'],
+    memeVideos: ['bhola_baba.mp4', 'live_life.mp4'],
+  },
+} as const
+
+export type PhotoSize = 'normal' | 'tall' | 'wide'
+export type PhotoEntry = { src: string; size: PhotoSize }
