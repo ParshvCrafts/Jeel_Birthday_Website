@@ -9,6 +9,8 @@ import { fadeUpVariants, staggerContainerVariants, fadeUpReducedVariants } from 
 import { useReducedMotion } from '@/hooks/useReducedMotion'
 import { Lightbox } from './Lightbox'
 
+const ROTATIONS = [1.5, -1, 2, -1.5, 1, -2]
+
 interface SoloGalleryProps {
   photos: readonly PhotoEntry[]
   title?: string
@@ -23,7 +25,7 @@ export function SoloGallery({ photos, title }: SoloGalleryProps) {
     <section className="py-16 md:py-24 px-4 md:px-8">
       {title && (
         <motion.p
-          className="text-center text-gold text-xs tracking-[0.4em] uppercase font-sans mb-10"
+          className="text-center text-gold text-sm tracking-[0.3em] uppercase font-sans mb-10"
           variants={reduced ? fadeUpReducedVariants : fadeUpVariants}
           initial="hidden"
           whileInView="visible"
@@ -35,7 +37,7 @@ export function SoloGallery({ photos, title }: SoloGalleryProps) {
 
       <motion.div
         className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 max-w-6xl mx-auto"
-        style={{ gridAutoRows: '200px' }}
+        style={{ gridAutoRows: '300px' }}
         variants={staggerContainerVariants}
         initial="hidden"
         whileInView="visible"
@@ -49,6 +51,10 @@ export function SoloGallery({ photos, title }: SoloGalleryProps) {
               photo.size === 'tall' ? 'row-span-2' : '',
               photo.size === 'wide' ? 'col-span-2' : '',
             ].join(' ')}
+            style={{
+              rotate: ROTATIONS[i % ROTATIONS.length],
+              boxShadow: '0 4px 24px rgba(0,0,0,0.5)',
+            }}
             variants={reduced ? fadeUpReducedVariants : fadeUpVariants}
             onClick={() => setLightboxIndex(i)}
             aria-label={`View photo ${i + 1}`}
@@ -57,9 +63,11 @@ export function SoloGallery({ photos, title }: SoloGalleryProps) {
               src={artifactPath(photo.src)}
               alt={`Photo ${i + 1}`}
               fill
-              className="object-cover transition-transform duration-700 group-hover:scale-105"
+              className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
               sizes="(max-width: 768px) 50vw, 33vw"
             />
+            {/* White polaroid frame */}
+            <div className="absolute inset-2 border-[5px] border-white/90 pointer-events-none z-10 rounded-sm" />
             <div className="absolute inset-0 border-2 border-gold/0 group-hover:border-gold/40 transition-all duration-300 rounded-sm pointer-events-none" />
             <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-all duration-300" />
           </motion.button>
