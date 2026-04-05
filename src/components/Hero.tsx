@@ -1,7 +1,8 @@
 'use client'
 
+import { useRef } from 'react'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { siteConfig } from '@/config/site.config'
 import { artifactPath } from '@/lib/mediaUtils'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
@@ -12,22 +13,31 @@ import {
   fadeUpReducedVariants,
   slideFromRightReducedVariants,
 } from '@/lib/animations'
+import { ParticleField } from './ParticleField'
 
 const words = siteConfig.text.heroGreeting.split(' ')
 
 export function Hero() {
   const reduced = useReducedMotion()
+  const heroRef = useRef<HTMLElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  })
+  const photoY = useTransform(scrollYProgress, [0, 1], ['0%', '20%'])
 
   return (
     <section
+      ref={heroRef}
       className="relative min-h-screen flex flex-col lg:flex-row pt-14"
       aria-label="Hero — Happy Birthday Chiku"
     >
+      <ParticleField />
       {/* LEFT: Text panel */}
       <div className="flex flex-col justify-center px-8 md:px-16 lg:px-24 py-16 lg:py-0 lg:w-[55%] z-10">
         {/* Date label */}
         <motion.p
-          className="text-gold text-xs tracking-[0.3em] uppercase font-sans mb-6"
+          className="text-gold text-sm tracking-[0.25em] uppercase font-sans mb-6"
           variants={reduced ? fadeUpReducedVariants : fadeUpVariants}
           initial="hidden"
           animate="visible"
@@ -81,7 +91,7 @@ export function Hero() {
 
         {/* Scroll indicator */}
         <motion.div
-          className="mt-12 flex items-center gap-3 text-subtle text-xs tracking-[0.2em] uppercase font-sans"
+          className="mt-12 flex items-center gap-3 text-subtle text-sm tracking-[0.15em] uppercase font-sans"
           variants={reduced ? fadeUpReducedVariants : fadeUpVariants}
           initial="hidden"
           animate="visible"
@@ -104,6 +114,7 @@ export function Hero() {
         initial="hidden"
         animate="visible"
         transition={{ delay: 0.3 }}
+        style={reduced ? {} : { y: photoY }}
       >
         {/* Gradient blending left edge into canvas on large screens */}
         <div
