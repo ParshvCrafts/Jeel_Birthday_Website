@@ -5,6 +5,9 @@ node_modules/
 .next/
 out/
 
+# compressed video output
+public/artifacts/compressed/
+
 # testing
 coverage/
 
