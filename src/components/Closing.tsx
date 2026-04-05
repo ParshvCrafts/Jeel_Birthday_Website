@@ -97,7 +97,7 @@ export function Closing() {
                 className="font-serif italic text-gold text-lg md:text-xl mb-10 max-w-xl mx-auto text-right"
                 variants={reduced ? fadeUpReducedVariants : fadeUpVariants}
               >
-                — {signature}
+                - {signature}
               </motion.p>
             )}
           </>
